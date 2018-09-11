@@ -2,14 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 
 import App from './components/app';
+import IntroToEvaluation from './components/intro-to-evaluation';
+import EvalComp from './components/eval';
+
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers)}>
-    <App />
-  </Provider>
-  , document.querySelector('.container'));
+    <Provider store={createStoreWithMiddleware(reducers)}>
+        <BrowserRouter>
+            <div>
+                <Switch>
+                    <Route path='/intro-to-evaluation' component={IntroToEvaluation}/>
+                    <Route path='/eval-page/:id' component={EvalComp}/>
+                    <Route path='/' component={App}/>
+                </Switch>
+            </div>
+        </BrowserRouter>
+    </Provider>
+    , document.querySelector('.container'));

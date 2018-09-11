@@ -1,0 +1,46 @@
+.links line {
+    stroke: #555;
+    stroke-opacity: 0.6;
+}
+
+.nodes circle {
+    stroke: #fff;
+    stroke-width: 1.5px;
+}
+.intro-header {
+    margin-top: 100px;
+    text-align: center;
+}
+.intro-paragraph {
+    text-align: center;
+    border: 1px solid #999;
+    padding: 30px 5px;
+    border-radius: 3px;
+    height: 100px;
+    width: 600px;
+    margin: 80px auto 40px auto;
+    box-shadow: 0px 3px 6px 1px #999;
+}
+.intro-button {
+    display: block !important;
+    margin: 5px auto !important;
+    width: 400px;
+    font-size: 24px !important;
+}
+.intro-graph {
+    display: block !important;
+    margin: 5px auto !important;
+}
+.float-right {
+    float: right !important;
+}
+.intro-two-buttons {
+    width: 300px;
+    font-size: 20px !important;
+}
+.text-align-right {
+    text-align: right !important;
+}
+.margin-top-20 {
+    margin-top: 20px;
+}
