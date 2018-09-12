@@ -19,16 +19,17 @@ class GraphDepiction extends Component {
             return null;
         }
         const svg = d3.select(this.refs.anchor)
-            .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
+                .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
             width = +svg.attr("width"),
             height = +svg.attr("height")
         ;
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         const simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) { return d.id; }))
-            .force("charge", d3.forceManyBody())
+            .force("link", d3.forceLink().id(function(d) {  return d.id; }).distance(100))
+            .force("charge", d3.forceManyBody().strength(-500))
             .force("center", d3.forceCenter(svgWidth/(svgZoom*2), svgHeight/(svgZoom*2)));
+
         const link = svg.append("g")
             .attr("class", "links")
             .selectAll("line")
@@ -36,32 +37,49 @@ class GraphDepiction extends Component {
             .enter().append("line")
             .attr("stroke-width", function(d) { return Math.sqrt(d.value * 2); });
 
+
         const node = svg.append("g")
             .attr("class", "nodes")
             .selectAll("circle")
             .data(graphData.nodes)
             .enter().append("circle")
-            .attr("r", 8);
+            .attr("r", 10)
 
-            if(svgColor) {
-                node.attr("fill", function (d) {
-                    return color(d.group);
-                });
-            }
 
-            if(interactive) {
+        if(svgColor) {
+            node.attr("fill", function (d) {
+                return color(d.group);
+            });
+        }
+
+        if(interactive) {
             node.call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended));
-            }
-
-        node.append("title")
-            .text(function(d) { return d.id; });
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+        }
+        const labels = svg.append("g")
+            .attr("class", "label")
+            .selectAll("text")
+            .data(graphData.nodes)
+            .enter().append("text")
+            .attr("dx", 10)
+            .attr("dy", ".35em")
+            .style("font-size", 16)
+            .text(function(d) {
+                return d.id
+            });
 
         simulation
             .nodes(graphData.nodes)
-            .on("tick", ticked);
+            .on("tick", ticked)
+            // .on("end", function() {
+            //     node.each(function(d) {
+            //         d.fx = d.x;
+            //         d.fy = d.y;
+            //     })
+            // })
+        ;
 
         simulation.force("link")
             .links(graphData.links);
@@ -76,6 +94,15 @@ class GraphDepiction extends Component {
             node
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; });
+
+            labels
+                .attr("x", function(d) {
+                    return d.x;
+                })
+                .attr("y", function(d) {
+                    return d.y;
+                });
+
         }
 
         function dragstarted(d) {

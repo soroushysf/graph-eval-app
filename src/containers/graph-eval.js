@@ -12,7 +12,6 @@ class GraphEval extends Component {
 
     render() {
         const graphData = this.props.firstDynGraphData;
-        const dist = this.props.distanceArray;
         return(
             <div className="row">
                 <Dijkstra/>
@@ -28,8 +27,7 @@ class GraphEval extends Component {
 
 function mapStateToProps(state) {
     return {
-        firstDynGraphData: state.firstDynGraphData,
-        distanceArray: state.distanceArray
+        firstDynGraphData: state.firstDynGraphData
     }
 }
 export default connect(mapStateToProps)(GraphEval);

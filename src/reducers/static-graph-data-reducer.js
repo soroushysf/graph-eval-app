@@ -3,40 +3,129 @@
  */
 export default function () {
     return {
-        "nodes":[
-            {"id": "a", "group": 1},
-            {"id": "b", "group": 1},
-            {"id": "c", "group": 1},
-            {"id": "d", "group": 1},
-            {"id": "e", "group": 1},
-            {"id": "f", "group": 1},
-            {"id": "g", "group": 1},
-            {"id": "h", "group": 1},
-            {"id": "i", "group": 1},
-            {"id": "j", "group": 1},
-            {"id": "k", "group": 1},
-            {"id": "l", "group": 1},
-            {"id": "m", "group": 1}
+        "nodes": [
+            {
+                "id" : "0",
+                "group" : "0"
+            },
+            {
+                "id" : "1",
+                "group" : "1"
+            },
+            {
+                "id" : "2",
+                "group" : "2"
+            },
+            {
+                "id" : "3",
+                "group" : "3"
+            },
+            {
+                "id" : "4",
+                "group" : "4"
+            },
+            {
+                "id" : "5",
+                "group" : "5"
+            },
+            {
+                "id" : "6",
+                "group" : "6"
+            },
+            {
+                "id" : "7",
+                "group" : "7"
+            },
+            {
+                "id" : "8",
+                "group" : "8"
+            },
+            {
+                "id" : "9",
+                "group" : "9"
+            },
+            {
+                "id" : "10",
+                "group" : "10"
+            },
+            {
+                "id" : "11",
+                "group" : "11"
+            }
         ],
-        "links":[
-            {"source": "a", "target": "b", "value": 1},
-            {"source": "b", "target": "c", "value": 1},
-            {"source": "b", "target": "d", "value": 1},
-            {"source": "c", "target": "f", "value": 1},
-            {"source": "d", "target": "h", "value": 1},
-            {"source": "f", "target": "h", "value": 1},
-            {"source": "g", "target": "d", "value": 1},
-            {"source": "a", "target": "d", "value": 1},
-            {"source": "c", "target": "h", "value": 1},
-            {"source": "e", "target": "g", "value": 1},
-            {"source": "l", "target": "m", "value": 1},
-            {"source": "m", "target": "a", "value": 1},
-            {"source": "k", "target": "d", "value": 1},
-            {"source": "f", "target": "j", "value": 1},
-            {"source": "i", "target": "b", "value": 1},
-            {"source": "k", "target": "b", "value": 1},
-            {"source": "m", "target": "j", "value": 1},
-            {"source": "i", "target": "h", "value": 1}
+        "links": [
+            {
+                "source" : "0",
+                "target" : "1"
+            },
+            {
+                "source" : "0",
+                "target" : "4"
+            },
+            {
+                "source" : "0",
+                "target" : "5"
+            },
+            {
+                "source" : "1",
+                "target" : "4"
+            },
+            {
+                "source" : "1",
+                "target" : "9"
+            },
+            {
+                "source" : "1",
+                "target" : "11"
+            },
+            {
+                "source" : "3",
+                "target" : "2"
+            },
+            {
+                "source" : "4",
+                "target" : "9"
+            },
+            {
+                "source" : "4",
+                "target" : "11"
+            },
+            {
+                "source" : "5",
+                "target" : "0"
+            },
+            {
+                "source" : "6",
+                "target" : "0"
+            },
+            {
+                "source" : "6",
+                "target" : "5"
+            },
+            {
+                "source" : "7",
+                "target" : "5"
+            },
+            {
+                "source" : "8",
+                "target" : "10"
+            },
+            {
+                "source" : "9",
+                "target" : "0"
+            },
+            {
+                "source" : "10",
+                "target" : "11"
+            },
+            {
+                "source" : "11",
+                "target" : "2"
+            },
+            {
+                "source" : "11",
+                "target" : "10"
+            }
         ]
     }
 }
