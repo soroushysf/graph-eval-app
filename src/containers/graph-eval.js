@@ -4,6 +4,7 @@
 
 import React, {Component} from 'react';
 import GraphDepiction from './d3-graph';
+import Dijkstra from './dijkstra';
 
 import {connect} from 'react-redux';
 
@@ -11,8 +12,10 @@ class GraphEval extends Component {
 
     render() {
         const graphData = this.props.firstDynGraphData;
+        const dist = this.props.distanceArray;
         return(
             <div className="row">
+                <Dijkstra/>
                 <div className="col-xs-12">
                     <svg width="960" height="600" className="intro-graph">
                     <GraphDepiction graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
@@ -23,9 +26,10 @@ class GraphEval extends Component {
     }
 }
 
-function mapStateToProps({firstDynGraphData}) {
+function mapStateToProps(state) {
     return {
-        firstDynGraphData
+        firstDynGraphData: state.firstDynGraphData,
+        distanceArray: state.distanceArray
     }
 }
 export default connect(mapStateToProps)(GraphEval);
