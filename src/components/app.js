@@ -11,19 +11,20 @@ class App extends Component {
       const {graphData} = this.props;
       return (
       <div>
-        <svg width="960" height="600" className="intro-graph">
-          <GraphDepiction graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
-        </svg>
-          <Link className="btn btn-success intro-button" graphData={this.props.graphData} to="/intro-to-evaluation">Graph Visualization Evaluation <FontAwesome.FaAngleDoubleRight/></Link>
+
+              <svg width="960" height="600" className="intro-graph">
+                  <GraphDepiction graphData={graphData} svgWidth={960} svgHeight={600} interactive={true} />
+              </svg>
+          <Link className="btn btn-success intro-button"  to="/intro-to-evaluation">Graph Visualization Evaluation <FontAwesome.FaAngleDoubleRight/></Link>
       </div>
 
     );
   }
 }
 
-function mapStateToProps({graphData}) {
+function mapStateToProps(state) {
     return {
-        graphData
+        graphData: state.firstDynGraphData
     }
 }
 

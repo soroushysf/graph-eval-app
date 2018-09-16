@@ -1,11 +1,10 @@
 /**
- * Created by soroush on 7/23/18.
+ * Created by soroush on 9/15/18.
  */
-
 
 export default function () {
     return {
-        "nodes": [
+        nodes: [
             {
                 "id" : "0",
                 "group" : "0"
@@ -53,81 +52,102 @@ export default function () {
             {
                 "id" : "11",
                 "group" : "11"
+            },
+            {
+                "id" : "12",
+                "group" : "12"
+            },
+            {
+                "id" : "13",
+                "group" : "13"
             }
         ],
-        "links": [
+        links: [
             {
                 "source" : "0",
-                "target" : "1"
+                "target" : "3"
             },
             {
                 "source" : "0",
-                "target" : "4"
+                "target" : "7"
             },
             {
                 "source" : "0",
+                "target" : "13"
+            },
+            {
+                "source" : "2",
+                "target" : "11"
+            },
+            {
+                "source" : "2",
+                "target" : "13"
+            },
+            {
+                "source" : "4",
+                "target" : "0"
+            },
+            {
+                "source" : "4",
                 "target" : "5"
             },
             {
-                "source" : "1",
-                "target" : "4"
-            },
-            {
-                "source" : "1",
-                "target" : "9"
-            },
-            {
-                "source" : "1",
-                "target" : "11"
-            },
-            {
-                "source" : "3",
-                "target" : "2"
-            },
-            {
                 "source" : "4",
-                "target" : "9"
-            },
-            {
-                "source" : "4",
-                "target" : "11"
+                "target" : "12"
             },
             {
                 "source" : "5",
-                "target" : "0"
+                "target" : "7"
+            },
+            {
+                "source" : "5",
+                "target" : "11"
             },
             {
                 "source" : "6",
-                "target" : "0"
-            },
-            {
-                "source" : "6",
-                "target" : "5"
-            },
-            {
-                "source" : "7",
-                "target" : "5"
+                "target" : "3"
             },
             {
                 "source" : "8",
+                "target" : "12"
+            },
+            {
+                "source" : "6",
+                "target" : "10"
+            },
+            {
+                "source" : "7",
+                "target" : "1"
+            },
+            {
+                "source" : "7",
                 "target" : "10"
             },
             {
                 "source" : "9",
-                "target" : "0"
+                "target" : "13"
             },
             {
                 "source" : "10",
-                "target" : "11"
+                "target" : "1"
             },
             {
-                "source" : "11",
+                "source" : "10",
                 "target" : "2"
             },
             {
                 "source" : "11",
-                "target" : "10"
+                "target" : "3"
+            },
+            {
+                "source" : "12",
+                "target" : "6"
+            },
+            {
+                "source" : "13",
+                "target" : "7"
             }
         ]
     }
 }
+

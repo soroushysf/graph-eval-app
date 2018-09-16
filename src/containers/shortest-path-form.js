@@ -18,14 +18,14 @@ class ShortestPath extends Component {
         )
     }
     render() {
-        console.log(this.props);
         const nextGraph = `/eval-page/${this.props.nextGraph}`;
+
         return(
             <div className="row">
             <form>
-                <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-6 col-form-label text-align-right">Shortest path between nodes A and B are:</label>
-                    <div class="col-sm-6">
+                <div className="form-group row">
+
+                    <div className="col-sm-6">
                         <Field
                             name="shortestPath"
                             component={this.renderPathInput}
@@ -40,6 +40,8 @@ class ShortestPath extends Component {
         )
     }
 }
+
+
 export default reduxForm({
     form: "graphPath"
 })(ShortestPath);

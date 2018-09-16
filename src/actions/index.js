@@ -1,9 +1,15 @@
+import axios from 'axios';
 
-export function dijkstraDistance (dist) {
+const GRAPH_DB_URL = 'http://localhost:3000/api/graphs/';
 
+export const FETCH_GRAPH = 'FETCH_GRAPH';
 
+export function fetchGraph (graphNumber) {
+
+    const request = axios.get(GRAPH_DB_URL+graphNumber);
     return {
-        type: 'DISTANCE_ARRAY_MADE',
-        payload: dist
+        type: FETCH_GRAPH,
+        payload: request
     }
+
 }

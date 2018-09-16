@@ -9,15 +9,67 @@ import * as d3 from 'd3';
 class GraphDepiction extends Component {
     constructor(props){
         super(props);
+
     }
     componentDidMount() {
-        console.log(this.props);
         this.depictGraph(this.props);
+    }
+    calculate_shortest_path () {
+        const nodes = this.props.graphData.nodes;
+        const links = this.props.graphData.links;
+        console.log(nodes);
+        console.log(links);
+        let dist = [], q = [], u = '';
+        nodes.forEach((node) => {
+            dist.push({ name: node.id, distance: 1000*node.id, visited: false, prev: null});
+            q[node.id] = node.id;
+        });
+        while(q.length > 0) {
+            let min_val = {name: "1000", distance: 10000000000, visited: false, prev: null};
+            dist.forEach((node) => {
+                if((node.distance < min_val.distance) && (!node.visited)){
+                    min_val = node;
+                }
+            })
+            dist.forEach((item) => {
+                if(item.name === min_val.name){
+                    item.visited = true;
+                }
+            })
+            u = min_val;
+            q = q.filter((item) => {
+                return item !== u.name;
+            })
+            for(let i = 0; i <= q.length; i ++) {
+                links.forEach((link) => {
+                    if(( (link.source === u.name) && (link.target === q[i])) || ((link.target === u.name) && (link.source === q[i]) )) {
+                        let alt = u.distance + 1;
+                        dist.forEach((item) => {
+                            if( (item.name === q[i]) && ( alt < item.distance) ) {
+                                item.distance = alt;
+                                item.prev = u.name;
+                            }
+                        })
+                    }
+                })
+            }
+        }
+        let dest = [];
+        dist.forEach((node) => {
+            if( (node.distance >= 3) && (node.distance <= 5)) {
+                dest.push(node);
+            }
+            // console.log(dest);
+        })
+        return {dist: dist, dest: dest[Math.floor(Math.random() * dest.length)]};
     }
     depictGraph({graphData,interactive = true, svgWidth, svgHeight, svgColor = true, svgZoom = 1}) {
         if(!graphData) {
             return null;
         }
+        const pathData = this.calculate_shortest_path();
+        console.log(graphData);
+        console.log(pathData);
         const svg = d3.select(this.refs.anchor)
                 .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
             width = +svg.attr("width"),
@@ -65,9 +117,14 @@ class GraphDepiction extends Component {
             .enter().append("text")
             .attr("dx", 10)
             .attr("dy", ".35em")
-            .style("font-size", 16)
+            .style("font-size", 24)
             .text(function(d) {
-                return d.id
+                if((d.id === "0") || (d.id === pathData.dest.name)) {
+                    return d.id
+                }
+                else {
+                    return '';
+                }
             });
 
         simulation
@@ -122,6 +179,7 @@ class GraphDepiction extends Component {
             d.fy = null;
         }
     }
+
     render() {
         return (
             <g ref="anchor"/>
