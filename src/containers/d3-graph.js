@@ -16,7 +16,9 @@ class GraphDepiction extends Component {
         this.depictGraph(this.props);
     }
     componentDidUpdate(){
-        this.depictGraph(this.props);
+        if(this.props.reRender) {
+            this.depictGraph(this.props);
+        }
     }
     calculate_shortest_path () {
 

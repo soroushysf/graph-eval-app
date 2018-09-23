@@ -33,7 +33,7 @@ class GraphBox extends Component {
         return (
         <div className="col-xs-12">
             <svg width="960" height="600" className="intro-graph">
-                <GraphDepiction setShortestPathData={this.props.setShortestPathData}   graphNumber={graphNumber} graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
+                <GraphDepiction reRender={true} setShortestPathData={this.props.setShortestPathData}   graphNumber={graphNumber} graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
             </svg>
         </div>
         )
