@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import GraphDepiction from './d3-graph';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import PropTypes from 'prop-types';
 
 import {fetchGraph} from './../actions/index';
 
@@ -21,7 +22,8 @@ class GraphBox extends Component {
         }
     }
     render(){
-        let graphData = this.props.graphAjax[this.props.match.params.id-1];
+        const graphNumber = this.props.match.params.id;
+        let graphData = this.props.graphAjax[graphNumber-1];
         if(graphData) {
             graphData = {
                 nodes : graphData.nodes.map((node) => {return {id: node.id, group: node.group}}),
@@ -31,12 +33,15 @@ class GraphBox extends Component {
         return (
         <div className="col-xs-12">
             <svg width="960" height="600" className="intro-graph">
-                <GraphDepiction graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
+                <GraphDepiction setShortestPathData={this.props.setShortestPathData}   graphNumber={graphNumber} graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
             </svg>
         </div>
         )
     }
 }
+GraphBox.propTypes = {
+    setShortestPathData: PropTypes.func
+};
 
 function mapStateToProps({graphAjax}) {
     return {

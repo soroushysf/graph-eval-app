@@ -7,6 +7,7 @@ import React, {Component} from 'react';
 import { Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
 import * as FontAwesome from 'react-icons/lib/fa';
+import {connect} from 'react-redux';
 
 class ShortestPath extends Component {
     renderPathInput(field) {
@@ -19,12 +20,16 @@ class ShortestPath extends Component {
     }
     render() {
         const nextGraph = `/eval-page/${this.props.nextGraph}`;
-
         return(
             <div className="row">
             <form>
-                <div className="form-group row">
+                <div className="form-group  margin-top-20">
+                    {this.props.targetNode.dest &&
+                    <div className="col-sm-6 text-align-right">
 
+                        shortest path between nodes 0 and {this.props.targetNode.dest.name} is has the length:
+                    </div>
+                    }
                     <div className="col-sm-6">
                         <Field
                             name="shortestPath"
@@ -41,6 +46,13 @@ class ShortestPath extends Component {
     }
 }
 
+function mapStateToProps({shortestPathState}){
+    return {
+        shortestPathState
+    }
+}
+
+ShortestPath = connect(mapStateToProps)(ShortestPath);
 
 export default reduxForm({
     form: "graphPath"

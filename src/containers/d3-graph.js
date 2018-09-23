@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import * as d3 from 'd3';
 
+import PropTypes from 'prop-types';
 
 class GraphDepiction extends Component {
     constructor(props){
@@ -64,11 +65,25 @@ class GraphDepiction extends Component {
         })
         return {dist: dist, dest: dest[Math.floor(Math.random() * dest.length)]};
     }
-    depictGraph({graphData,interactive = true, svgWidth, svgHeight, svgColor = true, svgZoom = 1}) {
+    depictGraph({graphData,interactive = true, svgWidth, svgHeight, svgColor = true, svgZoom = 1, graphNumber = 0}) {
         if(!graphData) {
             return null;
         }
+        graphNumber = parseInt(graphNumber);
+
         const pathData = this.calculate_shortest_path();
+        if (typeof this.props.setShortestPathData === 'function') {
+            this.props.setShortestPathData(pathData);
+        }
+        let shortestPath = [], nodeTemp = pathData.dest;
+        shortestPath.push(nodeTemp.name);
+        pathData.dist.forEach((node) => {
+            if(nodeTemp.prev === node.name){
+                shortestPath.push(node.name);
+                nodeTemp = node;
+            }
+        });
+        shortestPath.push("0");
         const svg = d3.select(this.refs.anchor)
                 .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
             width = +svg.attr("width"),
@@ -96,21 +111,7 @@ class GraphDepiction extends Component {
             .selectAll("circle")
             .data(graphData.nodes)
             .enter().append("circle")
-            .attr("r", 10)
-
-
-        if(svgColor) {
-            node.attr("fill", function (d) {
-                return color(d.group);
-            });
-        }
-
-        if(interactive) {
-            node.call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended));
-        }
+        ;
         const labels = svg.append("g")
             .attr("class", "label")
             .selectAll("text")
@@ -127,16 +128,56 @@ class GraphDepiction extends Component {
                     return '';
                 }
             });
+        switch (graphNumber) {
+            case 0:
+                if(svgColor) {
+                    node.attr("fill", function (d) {
+                        return color(d.group);
+                    })
+                        .attr("r", 10)
+                }
+                break;
+            case 1:
+                node.attr("fill", "#666")
+                    .attr("r", 10);
+                break;
+            case 2:
+                node.attr("fill", function (d) {
+                    if(shortestPath.indexOf(d.id) === -1){
+                        return "#666";
+                    } else {
+                        return "red";
+                    }
+                })
+                    .attr("r", 10)
+                break;
+            case 3:
+                node.attr("r", function (d) {
+                    if(shortestPath.indexOf(d.id) === -1){
+                        return 10;
+                    } else {
+                        return 16;
+                    }
+                })
+                    .attr("fill", "#666")
+                ;
+                labels
+                    .attr("dx", 18)
+                    .attr("dy", ".35em")
+                break;
+
+        }
+        if(interactive) {
+            node.call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
+        }
+
 
         simulation
             .nodes(graphData.nodes)
             .on("tick", ticked)
-            // .on("end", function() {
-            //     node.each(function(d) {
-            //         d.fx = d.x;
-            //         d.fy = d.y;
-            //     })
-            // })
         ;
 
         simulation.force("link")
@@ -187,5 +228,8 @@ class GraphDepiction extends Component {
         )
     }
 }
+GraphDepiction.propTypes = {
+    setShortestPathData: PropTypes.func
+};
 
 export default GraphDepiction;

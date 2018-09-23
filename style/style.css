@@ -2,7 +2,9 @@
     stroke: #555;
     stroke-opacity: 0.6;
 }
-
+.label {
+    color: red !important;
+}
 .nodes circle {
     stroke: #fff;
     stroke-width: 1.5px;
