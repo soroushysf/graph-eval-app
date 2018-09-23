@@ -14,11 +14,13 @@ class GraphDepiction extends Component {
     componentDidMount() {
         this.depictGraph(this.props);
     }
+    componentDidUpdate(){
+        this.depictGraph(this.props);
+    }
     calculate_shortest_path () {
+
         const nodes = this.props.graphData.nodes;
         const links = this.props.graphData.links;
-        console.log(nodes);
-        console.log(links);
         let dist = [], q = [], u = '';
         nodes.forEach((node) => {
             dist.push({ name: node.id, distance: 1000*node.id, visited: false, prev: null});
@@ -59,7 +61,6 @@ class GraphDepiction extends Component {
             if( (node.distance >= 3) && (node.distance <= 5)) {
                 dest.push(node);
             }
-            // console.log(dest);
         })
         return {dist: dist, dest: dest[Math.floor(Math.random() * dest.length)]};
     }
@@ -68,13 +69,13 @@ class GraphDepiction extends Component {
             return null;
         }
         const pathData = this.calculate_shortest_path();
-        console.log(graphData);
-        console.log(pathData);
         const svg = d3.select(this.refs.anchor)
                 .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
             width = +svg.attr("width"),
             height = +svg.attr("height")
         ;
+        svg.selectAll("*").remove();
+
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         const simulation = d3.forceSimulation()
@@ -182,7 +183,7 @@ class GraphDepiction extends Component {
 
     render() {
         return (
-            <g ref="anchor"/>
+            <g id="global-g" ref="anchor"/>
         )
     }
 }

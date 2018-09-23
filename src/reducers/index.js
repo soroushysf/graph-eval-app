@@ -7,7 +7,7 @@ import StaticGraphData from './static-graph-data-reducer';
 import FirstDynGraphData from './graph-eval-first-reducer';
 import DistanceArray from './distance-reducer';
 import TestData from './test-reducer-graph';
-import GraphAjax from './test-reducer-graph';
+import GraphAjax from './graph-ajax-reducer';
 
 const rootReducer = combineReducers({
     graphData : GraphData,
