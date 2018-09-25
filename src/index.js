@@ -8,6 +8,7 @@ import ReduxPromise from 'redux-promise'
 import App from './components/app';
 import IntroToEvaluation from './components/intro-to-evaluation';
 import EvalComp from './containers/eval';
+import EffortEval from './containers/effort-eval';
 
 import reducers from './reducers';
 
@@ -19,6 +20,7 @@ ReactDOM.render(
             <div>
                 <Switch>
                     <Route path='/intro-to-evaluation' component={IntroToEvaluation}/>
+                    <Route path='/eval-page-form/:id' component={EffortEval}/>
                     <Route path='/eval-page/:id' component={EvalComp}/>
                     <Route path='/' component={App}/>
                 </Switch>

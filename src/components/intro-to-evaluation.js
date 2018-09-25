@@ -11,15 +11,12 @@ import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 class IntroToEvaluation extends Component {
-    renderNameInput(field) {
-        return (
-            <input
-                type="text"
-                {...field.input}
-            />
-        )
+    onSubmit(values) {
+        console.log(values);
+        this.props.history.push('/eval-page/1');
     }
     render() {
+        const {handleSubmit} = this.props;
         const {graphData} = this.props;
 
         return(
@@ -35,12 +32,13 @@ class IntroToEvaluation extends Component {
                         <div className="col-xs-6 margin-top-20">
                             <Field
                                 name="evaluatorNameInput"
-                                component={this.renderNameInput}
+                                component="input"
+                                type="text"
                             />
                         </div>
                     </div>
                     <div className="col-xs-12 margin-top-20">
-                        <Link className="btn btn-success intro-two-buttons intro-graph" to='/eval-page/1'>start interactive graphs <FontAwesome.FaMagic/></Link>
+                        <Link onClick={handleSubmit(this.onSubmit.bind(this))} className="btn btn-success intro-two-buttons intro-graph" to='/eval-page/1'>start interactive graphs <FontAwesome.FaMagic/></Link>
                     </div>
                 </div>
             </div>

@@ -10,37 +10,103 @@ import * as FontAwesome from 'react-icons/lib/fa';
 import {connect} from 'react-redux';
 
 class ShortestPath extends Component {
-    renderPathInput(field) {
-        return (
-                <input
-                    type="text"
-                    {...field.input}
-                />
-        )
+    onSubmit(values){
+        console.log(values);
+        this.props.history.push(this.evalPage);
     }
     render() {
-        const nextGraph = `/eval-page/${this.props.nextGraph}`;
+        const {handleSubmit} = this.props;
+        this.evalPage = `/eval-page-form/${this.props.evalPage}`;
         return(
             <div className="row">
-            <form>
-                <div className="form-group  margin-top-20">
-                    {this.props.targetNode.dest &&
-                    <div className="col-sm-6 text-align-right">
+                <form>
+                    <div className="form-group  margin-top-20">
+                        {this.props.targetNode.dest &&
+                        <div className="col-sm-12 text-align-center">
 
-                        shortest path between nodes 0 and {this.props.targetNode.dest.name}, has the length of:
+                            shortest path between nodes 0 and {this.props.targetNode.dest.name}, has the length of:
+                        </div>
+                        }
+                        <div className="col-sm-12 margin-top-20 margin-left-48">
+                            <div className="col-xs-2 newRadios ">
+                                <label>
+                                    <Field
+                                        name="shortestPath"
+                                        value="2"
+                                        component="input"
+                                        type="radio"
+                                        className="option-input radio"
+                                    />
+                                    2
+                                </label>
+
+                            </div>
+                            <div className="col-xs-2 newRadios">
+                                <label>
+                                    <Field
+                                        name="shortestPath"
+                                        value="3"
+                                        component="input"
+                                        type="radio"
+                                        className="option-input radio"
+                                    />
+                                    3
+                                </label>
+                            </div>
+                            <div className="col-xs-2 newRadios">
+                                <label>
+                                    <Field
+                                        name="shortestPath"
+                                        value="4"
+                                        component="input"
+                                        type="radio"
+                                        className="option-input radio"
+                                    />
+                                    4
+                                </label>
+                            </div>
+                            <div className="col-xs-2 newRadios">
+                                <label >
+                                    <Field
+                                        name="shortestPath"
+                                        value="5"
+                                        component="input"
+                                        type="radio"
+                                        className="option-input radio"
+                                    />
+                                    5
+                                </label>
+                            </div>
+                            <div className="col-xs-2 newRadios">
+                                <label >
+                                    <Field
+                                        name="shortestPath"
+                                        value="6"
+                                        component="input"
+                                        type="radio"
+                                        className="option-input radio"
+                                    />
+                                    6
+                                </label>
+                            </div>
+                            <div className="col-xs-2 newRadios">
+                                <label >
+                                    <Field
+                                        name="shortestPath"
+                                        value="7"
+                                        component="input"
+                                        type="radio"
+                                        className="option-input radio"
+                                    />
+                                    7
+                                </label>
+                            </div>
+                        </div>
+                        <div className="col-xs-12 margin-top-50">
+                            <Link onClick={handleSubmit(this.onSubmit.bind(this))} className="btn btn-success intro-two-buttons intro-graph " to="/">submit and continue <FontAwesome.FaArrowRight/></Link>
+                        </div>
                     </div>
-                    }
-                    <div className="col-sm-6">
-                        <Field
-                            name="shortestPath"
-                            component={this.renderPathInput}
-                        />
-                    </div>
-                    <div className="col-xs-12 margin-top-20">
-                        <Link className="btn btn-success intro-two-buttons intro-graph " to={nextGraph}>submit answer and continue <FontAwesome.FaArrowRight/></Link>
-                    </div>
-                </div>
-            </form>
+                </form>
             </div>
         )
     }

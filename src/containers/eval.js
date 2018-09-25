@@ -12,16 +12,31 @@ export  default class EvalComp extends Component {
         super(props);
         this.sendDataToShortestPath = this.sendDataToShortestPath.bind(this);
         this.state= {
-            targetNode: ''
+            targetNode: '',
+            time: 0
         }
+    }
+    componentDidMount(){
+        this.intervalID = setInterval(
+            () => this.tick(),
+            10
+        )
+    }
+    tick() {
+        this.setState({
+            time: this.state.time+0.01
+        });
+    }
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
     }
     render() {
         const { match, location, history } = this.props;
-        const nextGraph =  parseInt(this.props.match.params.id) + 1;
+        const evalPage =  parseInt(this.props.match.params.id);
         return(
             <div>
                 <GraphBox setShortestPathData={this.sendDataToShortestPath} match = {match} location={location} history={history}/>
-                <ShortestPath targetNode={this.state.targetNode} ref={shortestPath => {this.shortestPath = shortestPath;}} nextGraph = {nextGraph}/>
+                <ShortestPath targetNode={this.state.targetNode} match = {match} location={location} history={history}  evalPage = {evalPage}/>
             </div>
         )
     }
