@@ -10,10 +10,32 @@ import * as FontAwesome from 'react-icons/lib/fa';
 import {connect} from 'react-redux';
 
 class ShortestPath extends Component {
+    constructor(props){
+        super(props);
+        this.state= {
+            time: 0
+        }
+    }
+
+    tick() {
+        this.setState({
+            time: this.state.time+0.01
+        });
+    }
+    componentWillUnmount() {
+        clearInterval(this.intervalID);
+    }
+    componentDidMount(){
+        this.intervalID = setInterval(
+            () => this.tick(),
+            10
+        )
+    }
     onSubmit(values){
-        console.log(values);
+        console.log(values );
         this.props.history.push(this.evalPage);
     }
+
     render() {
         const {handleSubmit} = this.props;
         this.evalPage = `/eval-page-form/${this.props.evalPage}`;

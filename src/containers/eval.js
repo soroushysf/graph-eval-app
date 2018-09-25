@@ -12,24 +12,12 @@ export  default class EvalComp extends Component {
         super(props);
         this.sendDataToShortestPath = this.sendDataToShortestPath.bind(this);
         this.state= {
-            targetNode: '',
-            time: 0
+            targetNode: ''
         }
     }
-    componentDidMount(){
-        this.intervalID = setInterval(
-            () => this.tick(),
-            10
-        )
-    }
-    tick() {
-        this.setState({
-            time: this.state.time+0.01
-        });
-    }
-    componentWillUnmount() {
-        clearInterval(this.intervalID);
-    }
+
+
+
     render() {
         const { match, location, history } = this.props;
         const evalPage =  parseInt(this.props.match.params.id);
