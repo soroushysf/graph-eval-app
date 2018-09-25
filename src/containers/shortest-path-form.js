@@ -27,7 +27,7 @@ class ShortestPath extends Component {
                     {this.props.targetNode.dest &&
                     <div className="col-sm-6 text-align-right">
 
-                        shortest path between nodes 0 and {this.props.targetNode.dest.name} is has the length:
+                        shortest path between nodes 0 and {this.props.targetNode.dest.name}, has the length of:
                     </div>
                     }
                     <div className="col-sm-6">

@@ -79,13 +79,16 @@ class GraphDepiction extends Component {
         }
         let shortestPath = [], nodeTemp = pathData.dest;
         shortestPath.push(nodeTemp.name);
-        pathData.dist.forEach((node) => {
-            if(nodeTemp.prev === node.name){
-                shortestPath.push(node.name);
-                nodeTemp = node;
-            }
-        });
-        shortestPath.push("0");
+
+        while(nodeTemp.prev !== null) {
+            pathData.dist.forEach((node) => {
+                if (nodeTemp.prev === node.name) {
+                    shortestPath.push(node.name);
+                    nodeTemp = node;
+                }
+            });
+        }
+
         const svg = d3.select(this.refs.anchor)
                 .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
             width = +svg.attr("width"),
@@ -105,15 +108,19 @@ class GraphDepiction extends Component {
             .selectAll("line")
             .data(graphData.links)
             .enter().append("line")
-            .attr("stroke-width", function(d) { return Math.sqrt(d.value * 2); });
+            .style("stroke", "#333")
 
 
         const node = svg.append("g")
             .attr("class", "nodes")
-            .selectAll("circle")
+            .selectAll("g")
             .data(graphData.nodes)
-            .enter().append("circle")
+            .attr("class", "first")
+            .enter().append("g")
+
         ;
+
+
         const labels = svg.append("g")
             .attr("class", "label")
             .selectAll("text")
@@ -133,39 +140,138 @@ class GraphDepiction extends Component {
         switch (graphNumber) {
             case 0:
                 if(svgColor) {
-                    node.attr("fill", function (d) {
-                        return color(d.group);
-                    })
+                    node
+                        .append("circle")
+                        .attr("fill", function (d) {
+                            return color(d.group);
+                        })
                         .attr("r", 10)
                 }
                 break;
             case 1:
-                node.attr("fill", "#666")
+                node
+                    .append("circle")
+                    .attr("fill", "#666")
                     .attr("r", 10);
                 break;
             case 2:
-                node.attr("fill", function (d) {
-                    if(shortestPath.indexOf(d.id) === -1){
-                        return "#666";
-                    } else {
-                        return "red";
-                    }
-                })
+                node
+                    .append("circle")
+                    .attr("fill", function (d) {
+                        if(shortestPath.indexOf(d.id) === -1){
+                            return "#666";
+                        } else {
+                            return "red";
+                        }
+                    })
                     .attr("r", 10)
                 break;
             case 3:
-                node.attr("r", function (d) {
-                    if(shortestPath.indexOf(d.id) === -1){
-                        return 10;
-                    } else {
-                        return 16;
-                    }
-                })
+                node
+                    .append("circle")
+                    .attr("r", function (d) {
+                        if(shortestPath.indexOf(d.id) === -1){
+                            return 10;
+                        } else {
+                            return 16;
+                        }
+                    })
                     .attr("fill", "#666")
                 ;
                 labels
                     .attr("dx", 18)
-                    .attr("dy", ".35em")
+                break;
+            case 4:
+                link
+                    .attr("stroke-width", function(d) {
+                        if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 ) ) {
+                            return 5;
+                        }
+                        else {
+                            return 0.8;
+                        }
+                    });
+                node
+                    .append("circle")
+                    .attr("r", 10)
+                    .attr("fill", "#666")
+                ;
+                break;
+            case 5:
+                node
+                    .attr("class", function(d) {
+                        if(shortestPath.indexOf(d.id) !== -1){
+                            return "path-icon"
+                        } else {
+                            return "not-path";
+                        }
+                    })
+                svg.selectAll(".path-icon")
+                    .append('text')
+                    .attr('font-family', 'FontAwesome')
+                    .style('font-size', '24px' )
+                    .style('fill', '#777')
+                    .text(function() { return '\uf0fe' })
+                ;
+                svg.selectAll(".not-path")
+                    .append("circle")
+                    .attr("r", 10)
+                    .attr("fill", "#666")
+                ;
+                labels
+                    .attr("dx", 24)
+                    .attr("dy", 0)
+                break;
+            case 6:
+                node
+                    .attr("class", function(d) {
+                        if(shortestPath.indexOf(d.id) !== -1){
+                            return "path-icon"
+                        } else {
+                            return "not-path";
+                        }
+                    })
+                svg.selectAll(".path-icon")
+                    .append('text')
+                    .attr('font-family', 'FontAwesome')
+                    .style('font-size', '38px' )
+                    .style('fill', 'red')
+                    .text(function() { return '\uf0fe' })
+                ;
+                svg.selectAll(".not-path")
+                    .append("circle")
+                    .attr("r", 10)
+                    .attr("fill", "#666")
+                ;
+                link
+                    .attr("stroke-width", function(d) {
+                        if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 ) ) {
+                            return 5;
+                        }
+                        else {
+                            return 0.8;
+                        }
+                    })
+                    .style("stroke", function (d) {
+                        if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 ) ) {
+                            return "red";
+                        }
+                        else {
+                            return "#333";
+                        }
+                    })
+                ;
+                labels
+                    .attr("dx", -18)
+                    .attr("dy", 0)
+                break;
+            default:
+                node
+                    .append("circle")
+                    .attr("r", 10)
+                    .attr("fill", function (d) {
+                        return color(d.group);
+                    })
                 break;
 
         }
@@ -193,8 +299,11 @@ class GraphDepiction extends Component {
                 .attr("y2", function(d) { return d.target.y; });
 
             node
-                .attr("cx", function(d) { return d.x; })
-                .attr("cy", function(d) { return d.y; });
+            // .attr("x", function(d) { return d.x; })
+            // .attr("y", function(d) { return d.y; });
+                .attr("transform", function(d) {
+                    return "translate(" + d.x + "," + d.y + ")";
+                });
 
             labels
                 .attr("x", function(d) {
