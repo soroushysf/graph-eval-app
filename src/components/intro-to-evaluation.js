@@ -9,10 +9,13 @@ import * as FontAwesome from 'react-icons/lib/fa';
 import SimpleGraph from './../components/simple-graph';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {collectGraphEvaluatorName} from './../actions/graph-eval-data';
 
 class IntroToEvaluation extends Component {
     onSubmit(values) {
         console.log(values);
+        this.props.collectGraphEvaluatorName(values.evaluatorNameInput);
         this.props.history.push('/eval-page/1');
     }
     render() {
@@ -52,8 +55,10 @@ function mapStateToProps({graphData}) {
         graphData
     }
 }
-
-IntroToEvaluation = connect(mapStateToProps)(IntroToEvaluation);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({collectGraphEvaluatorName}, dispatch);
+}
+IntroToEvaluation = connect(mapStateToProps, mapDispatchToProps)(IntroToEvaluation);
 
 export default reduxForm({
     form: "evaluatorName"

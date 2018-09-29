@@ -8,6 +8,8 @@ import { Field, reduxForm} from 'redux-form';
 import {Link} from 'react-router-dom';
 import * as FontAwesome from 'react-icons/lib/fa';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {preEvaluationData} from './../actions/graph-eval-data';
 
 class ShortestPath extends Component {
     constructor(props){
@@ -26,13 +28,15 @@ class ShortestPath extends Component {
         clearInterval(this.intervalID);
     }
     componentDidMount(){
+        console.log(this.props.graphEvalObject);
         this.intervalID = setInterval(
             () => this.tick(),
             10
         )
     }
     onSubmit(values){
-        console.log(values );
+        const {time} = this.state;
+        this.props.preEvaluationData({ time: time.toFixed(2), shortestPath: values.shortestPath });
         this.props.history.push(this.evalPage);
     }
 
@@ -134,13 +138,16 @@ class ShortestPath extends Component {
     }
 }
 
-function mapStateToProps({shortestPathState}){
+function mapStateToProps({shortestPathState, graphEvalObject}){
     return {
-        shortestPathState
+        shortestPathState,
+        graphEvalObject
     }
 }
-
-ShortestPath = connect(mapStateToProps)(ShortestPath);
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({preEvaluationData}, dispatch);
+}
+ShortestPath = connect(mapStateToProps, mapDispatchToProps)(ShortestPath);
 
 export default reduxForm({
     form: "graphPath"

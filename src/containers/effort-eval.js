@@ -7,11 +7,14 @@ import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Field, reduxForm} from 'redux-form';
 import * as FontAwesome from 'react-icons/lib/fa';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {collectGraphData} from './../actions/graph-eval-data';
 
 class EffortEval extends Component {
 
     onSubmit(values){
-        console.log(values);
+        this.props.collectGraphData({ shortestPathEval: values.shortestPathEval, time: this.props.preEvalObject.time, shortestPath: this.props.preEvalObject.shortestPath });
         this.props.history.push(this.nextGraph);
     }
 
@@ -135,6 +138,19 @@ class EffortEval extends Component {
         );
     }
 }
+
+function mapStateToProps({preEvalObject}) {
+    return {
+        preEvalObject
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+        return bindActionCreators({collectGraphData}, dispatch);
+}
+
+EffortEval = connect(mapStateToProps, mapDispatchToProps)(EffortEval);
+
 
 export default reduxForm({
     form: "graphEvalForm"
