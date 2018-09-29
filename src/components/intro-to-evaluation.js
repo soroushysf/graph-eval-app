@@ -14,7 +14,6 @@ import {collectGraphEvaluatorName} from './../actions/graph-eval-data';
 
 class IntroToEvaluation extends Component {
     onSubmit(values) {
-        console.log(values);
         this.props.collectGraphEvaluatorName(values.evaluatorNameInput);
         this.props.history.push('/eval-page/1');
     }

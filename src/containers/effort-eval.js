@@ -27,7 +27,7 @@ class EffortEval extends Component {
         const {handleSubmit} = this.props;
         this.nextGraph =  `/eval-page/${parseInt(this.props.match.params.id)+1}`;
         return(
-            <div className="row">
+            <div className="row">s
                 <form action="">
                     <div className="col-xs-12 margin-top-200 text-align-center">
                         Enter the mental effort you devoted for this task(10 being the highest and 1 the lowest):
@@ -144,9 +144,10 @@ class EffortEval extends Component {
     }
 }
 
-function mapStateToProps({preEvalObject}) {
+function mapStateToProps({preEvalObject, graphEvalObject}) {
     return {
-        preEvalObject
+        preEvalObject,
+        graphEvalObject
     }
 }
 
