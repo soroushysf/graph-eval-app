@@ -14,7 +14,12 @@ import {collectGraphData} from './../actions/graph-eval-data';
 class EffortEval extends Component {
 
     onSubmit(values){
-        this.props.collectGraphData({ shortestPathEval: values.shortestPathEval, time: this.props.preEvalObject.time, shortestPath: this.props.preEvalObject.shortestPath });
+        this.props.collectGraphData({
+            shortestPathEval: values.shortestPathEval,
+            time: this.props.preEvalObject.time,
+            shortestPathChosen: this.props.preEvalObject.shortestPathChosen,
+            correctShortestPath: this.props.preEvalObject.correctShortestPath
+        });
         this.props.history.push(this.nextGraph);
     }
 

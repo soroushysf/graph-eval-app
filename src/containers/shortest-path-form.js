@@ -36,7 +36,7 @@ class ShortestPath extends Component {
     }
     onSubmit(values){
         const {time} = this.state;
-        this.props.preEvaluationData({ time: time.toFixed(2), shortestPath: values.shortestPath });
+        this.props.preEvaluationData({ time: time.toFixed(2), shortestPathChosen: values.shortestPath, correctShortestPath: this.props.targetNode.dest.distance});
         this.props.history.push(this.evalPage);
     }
 
