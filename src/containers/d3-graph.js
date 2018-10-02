@@ -88,7 +88,15 @@ class GraphDepiction extends Component {
                 }
             });
         }
-
+        for(let i = 0; i < shortestPath.length-1; i++) {
+            graphData.links.forEach((link) => {
+                if( (link.target === shortestPath[shortestPath.length-(i+1)]) && (link.source === shortestPath[shortestPath.length-(i+2)])) {
+                    let linkDetailTemp = link.target;
+                    link.target = link.source;
+                    link.source = linkDetailTemp;
+                }
+            })
+        }
         const svg = d3.select(this.refs.anchor)
                 .attr("transform",`translate(0,0) scale(${svgZoom}, ${svgZoom})`),
             width = +svg.attr("width"),
@@ -96,11 +104,27 @@ class GraphDepiction extends Component {
         ;
         svg.selectAll("*").remove();
 
+        svg
+            .append("svg:defs").selectAll("marker")
+            .data(["end"])      // Different link/path types can be defined here
+            .enter().append("svg:marker")    // This section adds in the arrows
+            .attr("id", String)
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX",25)
+            .attr("refY", 0)
+            .attr("markerWidth", 15)
+            .attr("markerHeight", 15)
+            .attr("orient", "auto")
+            .append("svg:path")
+            .attr('d', 'M 0,-5 L 10 ,0 L 0,5');
+
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
         const simulation = d3.forceSimulation()
-            .force("link", d3.forceLink().id(function(d) {  return d.id; }).distance(100))
-            .force("charge", d3.forceManyBody().strength(-500))
+            .force("link", d3.forceLink().id(function(d) {  return d.id; }).distance(function () {
+                return 30*( (Math.random()+0.5)*4);
+            }))
+            .force("charge", d3.forceManyBody().strength(-200))
             .force("center", d3.forceCenter(svgWidth/(svgZoom*2), svgHeight/(svgZoom*2)));
 
         const link = svg.append("g")
@@ -109,8 +133,7 @@ class GraphDepiction extends Component {
             .data(graphData.links)
             .enter().append("line")
             .style("stroke", "#333")
-
-
+        ;
         const node = svg.append("g")
             .attr("class", "nodes")
             .selectAll("g")
@@ -252,6 +275,17 @@ class GraphDepiction extends Component {
                             return 0.8;
                         }
                     })
+                ;
+                labels
+                    .attr("dx", -18)
+                    .attr("dy", 0)
+                break;
+            case 7:
+                node
+                    .attr("fill", "#666")
+                    .append("circle")
+                    .attr("r", 10)
+                link
                     .style("stroke", function (d) {
                         if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 ) ) {
                             return "red";
@@ -260,10 +294,131 @@ class GraphDepiction extends Component {
                             return "#333";
                         }
                     })
-                ;
-                labels
-                    .attr("dx", -18)
-                    .attr("dy", 0)
+                break;
+            case 8:
+                node
+                    .attr("fill", function(d){
+                        if((d.id === "0") || (d.id === pathData.dest.name)){
+                            return "red";
+                        } else {
+                            return "#666";
+                        }
+                    })
+                    .append("circle")
+                    .attr("r", 10)
+                break;
+            case 9:
+                simulation
+                    .force("link", d3.forceLink().distance(180));
+                node
+                    .append("circle")
+                    .attr("fill", function (d) {
+                        if(shortestPath.indexOf(d.id) === -1){
+                            return "#666";
+                        } else {
+                            return "red";
+                        }
+                    })
+                    .attr("r", 10)
+                break;
+            case 10:
+                simulation
+                    .force("link", d3.forceLink().distance(180));
+                node
+                    .append("circle")
+                    .attr("r", function (d) {
+                        if(shortestPath.indexOf(d.id) === -1){
+                            return 10;
+                        } else {
+                            return 16;
+                        }
+                    })
+                    .attr("fill", "#666")
+                break;
+            case 11:
+                simulation
+                    .force("link", d3.forceLink().distance(180));
+                node
+                    .attr("fill", "#666")
+                    .append("circle")
+                    .attr("r", 10)
+                link
+                    .style("stroke", function (d) {
+                        if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 ) ) {
+                            return "red";
+                        }
+                        else {
+                            return "#333";
+                        }
+                    })
+                break;
+            case 12:
+                simulation
+                    .force("charge", d3.forceManyBody().strength(-2000))
+                    .force("link", d3.forceLink().distance(function () {
+                        return 5*( (Math.random())*3);
+                    }))
+                node
+                    .append("circle")
+                    .attr("fill", function (d) {
+                        if(shortestPath.indexOf(d.id) === -1){
+                            return "#666";
+                        } else {
+                            return "red";
+                        }
+                    })
+                    .attr("r", 10)
+                break;
+            case 13:
+                simulation
+                    .force("charge", d3.forceManyBody().strength(-2000))
+                    .force("link", d3.forceLink().distance(function () {
+                        return 5*( (Math.random())*3);
+                    }))
+                node
+                    .append("circle")
+                    .attr("r", function (d) {
+                        if(shortestPath.indexOf(d.id) === -1){
+                            return 10;
+                        } else {
+                            return 16;
+                        }
+                    })
+                    .attr("fill", "#666")
+                break;
+            case 14:
+                simulation
+                    .force("charge", d3.forceManyBody().strength(-1700))
+                    .force("link", d3.forceLink().distance(function () {
+                        return 5*( (Math.random())*3);
+                    }))
+                node
+                    .attr("fill", "#666")
+                    .append("circle")
+                    .attr("r", 10)
+                link
+                    .style("stroke", function (d) {
+                        if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 ) ) {
+                            return "red";
+                        }
+                        else {
+                            return "#333";
+                        }
+                    })
+                break;
+            case 15:
+                link
+                    .attr("marker-end", function (d) {
+                        if((shortestPath.indexOf(d.target) !== -1) && (shortestPath.indexOf(d.source) !== -1 )){
+                            return "url(#end)";
+                        }else {
+                            return "";
+                        }
+                    })
+                node
+                    .attr("fill", "#666")
+                    .append("circle")
+                    .attr("r", 10)
                 break;
             default:
                 node

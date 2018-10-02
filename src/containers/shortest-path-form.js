@@ -34,9 +34,9 @@ class ShortestPath extends Component {
             () => this.tick(),
             10
         )
-        if(this.props.match.params.id != 1) {
-            this.props.postEvaluation(this.props.graphEvalObject);
-        }
+        // if(this.props.match.params.id != 1) {
+        //     this.props.postEvaluation(this.props.graphEvalObject);
+        // }
     }
     onSubmit(values){
         const {time} = this.state;
