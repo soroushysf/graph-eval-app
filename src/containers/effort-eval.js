@@ -10,6 +10,7 @@ import * as FontAwesome from 'react-icons/lib/fa';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {collectGraphData} from './../actions/graph-eval-data';
+import {postEvaluation} from './../actions/index';
 
 class EffortEval extends Component {
 
@@ -20,7 +21,17 @@ class EffortEval extends Component {
             shortestPathChosen: this.props.preEvalObject.shortestPathChosen,
             correctShortestPath: this.props.preEvalObject.correctShortestPath
         });
-        this.props.history.push(this.nextGraph);
+        if( Number(this.props.match.params.id) === 15) {
+            this.props.history.push('/last-page');
+
+        } else {
+            this.props.history.push(this.nextGraph);
+        }
+    }
+    componentWillUnmount() {
+        if(Number(this.props.match.params.id) === 15) {
+            this.props.postEvaluation(this.props.graphEvalObject);
+        }
     }
 
     render(){
@@ -152,7 +163,7 @@ function mapStateToProps({preEvalObject, graphEvalObject}) {
 }
 
 function mapDispatchToProps(dispatch) {
-        return bindActionCreators({collectGraphData}, dispatch);
+        return bindActionCreators({collectGraphData, postEvaluation}, dispatch);
 }
 
 EffortEval = connect(mapStateToProps, mapDispatchToProps)(EffortEval);

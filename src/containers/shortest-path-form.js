@@ -10,7 +10,6 @@ import * as FontAwesome from 'react-icons/lib/fa';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {preEvaluationData} from './../actions/graph-eval-data';
-import {postEvaluation} from './../actions/index';
 
 
 class ShortestPath extends Component {
@@ -34,9 +33,7 @@ class ShortestPath extends Component {
             () => this.tick(),
             10
         )
-        // if(this.props.match.params.id != 1) {
-        //     this.props.postEvaluation(this.props.graphEvalObject);
-        // }
+
     }
     onSubmit(values){
         const {time} = this.state;
@@ -149,7 +146,7 @@ function mapStateToProps({shortestPathState, graphEvalObject}){
     }
 }
 function mapDispatchToProps(dispatch) {
-    return bindActionCreators({preEvaluationData, postEvaluation}, dispatch);
+    return bindActionCreators({preEvaluationData}, dispatch);
 }
 ShortestPath = connect(mapStateToProps, mapDispatchToProps)(ShortestPath);
 
