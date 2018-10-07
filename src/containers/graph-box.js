@@ -23,6 +23,12 @@ class GraphBox extends Component {
     }
     render(){
         const graphNumber = this.props.match.params.id;
+        let svgZoom = 1;
+        if( (Number(graphNumber) < 12 ) || (Number(graphNumber) === 15)) {
+            svgZoom = 0.85;
+        } else {
+            svgZoom = 0.6;
+        }
         let graphData = this.props.graphAjax[graphNumber-1];
         if(graphData) {
             graphData = {
@@ -32,8 +38,8 @@ class GraphBox extends Component {
         }
         return (
         <div className="col-xs-12">
-            <svg width="960" height="600" className="intro-graph">
-                <GraphDepiction reRender={true} setShortestPathData={this.props.setShortestPathData}   graphNumber={graphNumber} graphData={graphData} svgWidth={960} svgHeight={600} interactive={true}/>
+            <svg width="1100" height="600" className="intro-graph">
+                <GraphDepiction reRender={true} setShortestPathData={this.props.setShortestPathData} svgZoom={svgZoom}  graphNumber={graphNumber} graphData={graphData} svgWidth={1100} svgHeight={600} interactive={true}/>
             </svg>
         </div>
         )

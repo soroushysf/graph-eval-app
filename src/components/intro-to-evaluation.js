@@ -24,7 +24,6 @@ class IntroToEvaluation extends Component {
         return(
             <div className="row">
                 <h3 className="intro-header">Detect the shortest path between highlighted nodes</h3>
-                <p className="intro-paragraph">When you click start, time will start to count and the first graph will be illustrated</p>
                 <div className="col-xs-12">
                     <div className="col-xs-12">
                         <SimpleGraph reRender={false} graphData={graphData}/>

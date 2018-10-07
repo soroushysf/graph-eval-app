@@ -28,11 +28,7 @@ class EffortEval extends Component {
             this.props.history.push(this.nextGraph);
         }
     }
-    componentWillUnmount() {
-        if(Number(this.props.match.params.id) === 15) {
-            this.props.postEvaluation(this.props.graphEvalObject);
-        }
-    }
+
 
     render(){
         const {handleSubmit} = this.props;
@@ -163,7 +159,7 @@ function mapStateToProps({preEvalObject, graphEvalObject}) {
 }
 
 function mapDispatchToProps(dispatch) {
-        return bindActionCreators({collectGraphData, postEvaluation}, dispatch);
+        return bindActionCreators({collectGraphData}, dispatch);
 }
 
 EffortEval = connect(mapStateToProps, mapDispatchToProps)(EffortEval);

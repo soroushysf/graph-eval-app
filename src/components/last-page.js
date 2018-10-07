@@ -5,11 +5,17 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {postEvaluation} from './../actions/index';
 import * as FontAwesome from 'react-icons/lib/fa';
 
 
-export default class LastPage extends Component {
+class LastPage extends Component {
 
+    componentDidMount(){
+        this.props.postEvaluation(this.props.graphEvalObject);
+    }
     render(){
         return(
             <div>
@@ -19,3 +25,15 @@ export default class LastPage extends Component {
         )
     }
 }
+function mapStateToProps({graphEvalObject}) {
+    return {
+        graphEvalObject
+    }
+}
+
+
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({postEvaluation}, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LastPage);
