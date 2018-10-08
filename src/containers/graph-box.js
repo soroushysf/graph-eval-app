@@ -24,8 +24,8 @@ class GraphBox extends Component {
     render(){
         const graphNumber = this.props.match.params.id;
         let svgZoom = 1;
-        if( (Number(graphNumber) < 12 ) || (Number(graphNumber) === 15)) {
-            svgZoom = 0.85;
+        if( (Number(graphNumber) < 17 )) {
+            svgZoom = 0.8;
         } else {
             svgZoom = 0.6;
         }

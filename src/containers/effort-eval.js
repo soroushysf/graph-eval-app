@@ -21,7 +21,7 @@ class EffortEval extends Component {
             shortestPathChosen: this.props.preEvalObject.shortestPathChosen,
             correctShortestPath: this.props.preEvalObject.correctShortestPath
         });
-        if( Number(this.props.match.params.id) === 15) {
+        if( Number(this.props.match.params.id) === 20) {
             this.props.history.push('/last-page');
 
         } else {
